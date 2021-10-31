@@ -1,0 +1,66 @@
+npm init vite@latest
+cd 360vite_ts
+  npm install
+  npm run dev
+
+
+=====git
+git init
+git status
+git add dir_name
+git commit -m "first"
+git remote rm origin
+git remote add origin git@github.com:aurora008/vite_vue_js_repository.git
+git push -u origin master
+//git branch -M main
+//git push -u origin main
+git clone git@github.com:aurora008/vite_vue_js_repository.git
+
+=====mongoDB 
+(ping gl.mongodb.org=>hosts快速下载MongoDB)
+安装完成后 配置环境变量 
+mongo
+E:
+cd E:\MongoDB\Server\4.0\bin
+mongod.exe --dbpath E:\MongoDB\Server\4.0\data\db
+
+=====mongoose
+npm i mongoose --save-dev
+
+
+=====express
+npm install express
+npm install nodemon
+npm install @types/node --save-dev(无法使用require())
+npm i -D @vitejs/plugin-legacy(能够扩展开发服务器和 SSR 功能)
+
+======git\git bash======
+git remote rm origin
+git remote add origin git@github.com:aurora008/vite_ts_repository.git(ssh-url)(连接远程仓库)
+git push -u origin master(master/main/aurora)
+git config --list
+git init
+git add filename
+git commit -m "提交注释：第一次。"
+git status
+
+git diff --cached
+git reset
+git mv 原文件名称 新文件名称
+git log --all/--graph/-n
+git branch -v(用于查看所有分支)/-d (分支名称)
+git branch -m master main 新分支 旧分支
+git checkout -b 新分支
+git checkout 新分支
+gitk 打开图形界面
+
+git remote add origin git@github.com:aurora008/vite_ts_repository.git(ssh-url)(连接远程仓库)
+git push -u origin master(master/main/aurora)
+
+
+git config --global http.sslVerify "false"(无法git push)
+git remote rm origin(error: remote origin already exists.)
+(fatal: Could not read from remote repository.)
+打开git bash
+ssh-keygen -t rsa -C "1750254098@qq.com"
+cat ~/.ssh/id_rsa.pub
