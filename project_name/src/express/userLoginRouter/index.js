@@ -6,7 +6,7 @@ const { insert, sellect_one, sellect_all, update_one, remove, remove_all } = req
 const userLoginModel = require("../../mongoose/userLogin")
 const { get_rand_user } = require("../../constructors");
 
-userLoginRouter.post("/post", (req, res) => {
+userLoginRouter.get("/post", (req, res) => {
     userLoginModel(get_rand_user()).save().then((data) => {
         console.log('data: ', data);
         res.json(data)

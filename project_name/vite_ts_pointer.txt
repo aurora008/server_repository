@@ -3,7 +3,6 @@ cd 360vite_ts
   npm install
   npm run dev
 
-
 =====git
 git init
 git status
@@ -15,6 +14,25 @@ git push -u origin master
 //git branch -M main
 //git push -u origin main
 git clone git@github.com:aurora008/vite_vue_js_repository.git
+git clone git@github.com:aurora008/server_repository.git
+git clone git://github.com/aurora008/server_repository.git(yum install git 在服务器上clone)
+git clone https://github.com/aurora008/vuecli_js_repository.git
+
+=====forever(永久运行在服务器)
+cd project_name
+forever stop server.js
+forever start -l project_name.log -a server.js
+
+npm install -g forever
+forever list//显示所有forever运行的服务
+forever start -l forever.log app.js//指定信息输出文件
+forever start -o out.log -e err.log app.js//指定日志信息和错误日志输出文件
+forever start -l forever.log -a app.js//追加日志
+forever start -w app.js//监听当前文件夹下的所有文件改动
+forever stop app.js//停止一个forever服务
+forever stop [id]//或者
+forever restart app.js//重启一个node
+forever restartall//重启所有运行的node
 
 =====mongoDB 
 (ping gl.mongodb.org=>hosts快速下载MongoDB)
@@ -26,7 +44,6 @@ mongod.exe --dbpath E:\MongoDB\Server\4.0\data\db
 
 =====mongoose
 npm i mongoose --save-dev
-
 
 =====express
 npm install express
@@ -53,11 +70,8 @@ git branch -m master main 新分支 旧分支
 git checkout -b 新分支
 git checkout 新分支
 gitk 打开图形界面
-
 git remote add origin git@github.com:aurora008/vite_ts_repository.git(ssh-url)(连接远程仓库)
 git push -u origin master(master/main/aurora)
-
-
 git config --global http.sslVerify "false"(无法git push)
 git remote rm origin(error: remote origin already exists.)
 (fatal: Could not read from remote repository.)

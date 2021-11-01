@@ -32,9 +32,9 @@ const update_one = async (collection_name, where, new_obj, callback) => {
 const insert = async (collection_name, obj, callback) => {
     const collection_model = getCollectionModel(collection_name)
     collection_model.create(obj, (err, docs) => {
-        if (err) console.log('插入没有成功: ', obj);
+        if (err) console.log('插入没有成功: ', JSON.stringify(obj));
         if (!err) {
-            console.log('插入成功: ', obj);
+            console.log('插入成功: ', JSON.stringify(obj));
             callback(docs)
         }
     })
@@ -49,7 +49,7 @@ const sellect_one = async (collection_name, where, callback) => {
             return undefined
         }
         if (!err) {
-            console.log('已查询第一条数据: ', doc);
+            console.log('已查询第一条数据: ', JSON.stringify(doc));
             callback(doc)
             return doc;
         }
@@ -64,7 +64,7 @@ const sellect_all = async (collection_name, where, callback) => {
             return undefined
         }
         if (!err) {
-            console.log('已查询所有数据: ', docs);
+            console.log('已查询所有数据: ', JSON.stringify(docs));
             callback(docs)
             return docs;
         }
@@ -83,11 +83,11 @@ const remove = async (collection_name, where, callback) => {
             docs.forEach((item, index, arr) => {
                 item.remove((_err, doc) => {
                     if (_err) {
-                        console.log('移除数据失败: ', doc);
+                        console.log('移除数据失败: ', JSON.stringify(doc));
                         callback(false)
                         return;
                     }
-                    if (!_err) { console.log('已移除数据: ', doc); }
+                    if (!_err) { console.log('已移除数据: ', JSON.stringify(doc)); }
                 })
             });
             callback(true)
