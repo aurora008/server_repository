@@ -19,12 +19,15 @@ const update_one = async (collection_name, where, new_obj, callback) => {
             return;
         }
         if (raw.matchedCount) {
-            console.log('已更新: ', raw.matchedCount);
+            console.log('已更新: ', where);
+            callback(true);
+            return;
         }
         if (raw.upsertedCount) {
             console.log('未匹配到但已插入: ', raw.upsertedCount);
+            callback(true);
+            return;
         }
-        callback(raw);
         return;
     })
 }
@@ -32,13 +35,25 @@ const update_one = async (collection_name, where, new_obj, callback) => {
 const insert = async (collection_name, obj, callback) => {
     const collection_model = getCollectionModel(collection_name)
     collection_model.create(obj, (err, docs) => {
-        if (err) console.log('插入没有成功: ', JSON.stringify(obj));
+        if (err) {
+            console.log('插入没有成功: ', JSON.stringify(obj));
+            callback(false)
+        }
         if (!err) {
             console.log('插入成功: ', JSON.stringify(obj));
-            callback(docs)
+            callback(true)
         }
     })
     return;
+}
+//查询数据,按条件，返回最后一条数据 已测试
+const sellect_last = async (collection_name, where, callback) => {
+    const collection_model = getCollectionModel(collection_name)
+    collection_model.find(where).sort({ _id: -1 }).limit(1).exec((err, docs) => {
+        if (err) return undefined
+        callback(docs)
+        return docs
+    })
 }
 //查询数据,按条件，返回一条数据 已测试
 const sellect_one = async (collection_name, where, callback) => {
@@ -64,7 +79,7 @@ const sellect_all = async (collection_name, where, callback) => {
             return undefined
         }
         if (!err) {
-            console.log('已查询所有数据: ', JSON.stringify(docs));
+            console.log('已查询所有数据: ', docs.length);
             callback(docs)
             return docs;
         }
@@ -79,34 +94,33 @@ const remove = async (collection_name, where, callback) => {
             callback(false);
             return;
         }
-        if (!err) {
-            docs.forEach((item, index, arr) => {
-                item.remove((_err, doc) => {
-                    if (_err) {
-                        console.log('移除数据失败: ', JSON.stringify(doc));
-                        callback(false)
-                        return;
-                    }
-                    if (!_err) { console.log('已移除数据: ', JSON.stringify(doc)); }
-                })
-            });
-            callback(true)
-        }
+        docs.forEach((item, index, arr) => {
+            item.remove((_err, doc) => {
+                if (_err) {
+                    console.log('移除数据失败: ', JSON.stringify(doc));
+                    callback(false)
+                    return;
+                }
+                if (!_err) { console.log('已移除数据: ', JSON.stringify(doc)); }
+            })
+        });
+        callback(true)
         return;
 
     })
 }
 //移除数据，清除集合 已测试
-const remove_all = async (collection_name) => {
+const remove_all = async (collection_name, callback) => {
     const collection_model = getCollectionModel(collection_name)
     await collection_model.deleteMany({}, (err) => {
-        if (err) console.log('清除集合失败: ', err);
-        if (!err) console.log('已清除清除集合: ', collection_name);
+        if (err) { console.log('清除集合失败: ', err); callback(false); return; }
+        console.log('已清除清除集合: ', collection_name);
+        callback(true);
     })
     return;
 }
 
-module.exports = { insert, sellect_one, sellect_all, update_one, remove, remove_all }
+module.exports = { insert, sellect_one, sellect_all, update_one, remove, remove_all, sellect_last }
 
 
 

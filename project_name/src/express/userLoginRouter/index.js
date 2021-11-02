@@ -1,20 +1,11 @@
 const express = require("express")
+const cors = require("cors")
 const userLoginRouter = express.Router()
 const collectionName = "userLogin"
-const { insert, sellect_one, sellect_all, update_one, remove, remove_all } = require("../../mongoose")
-//const getCollectionModel=require("../../mongoose/getCollectionModel")
-const userLoginModel = require("../../mongoose/userLogin")
+const { insert, sellect_last, sellect_all, update_one, remove, remove_all } = require("../../mongoose")
 const { get_rand_user } = require("../../constructors");
 
-userLoginRouter.get("/post", (req, res) => {
-    userLoginModel(get_rand_user()).save().then((data) => {
-        console.log('data: ', data);
-        res.json(data)
-    }).catch((err) => {
-        res.json({ message: err })
-    })
-
-})
+userLoginRouter.use(cors())
 userLoginRouter.get("/", (req, res) => {
     res.send(collectionName)
     return;
@@ -25,13 +16,14 @@ userLoginRouter.get("/insert", (req, res) => {
     })
     return;
 })
-userLoginRouter.get("/sellect_one", (req, res) => {
-    sellect_one(collectionName, { name: 'xm' }, (doc) => {
+userLoginRouter.get("/sellect_last", (req, res) => {
+    sellect_last(collectionName,{}, (doc) => {
         res.json(doc)
     })
     return;
 })
 userLoginRouter.get("/sellect_all", (req, res) => {
+    //res.setHeader("Access-Control-Allow-Origin","*")
     sellect_all(collectionName, {}, (docs) => {
         res.json(docs)
     });

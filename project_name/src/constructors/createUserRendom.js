@@ -25,7 +25,7 @@ const get_rand_pwd = (type) => {
 }
 const get_rand_user = () => {
     let user = { id: "", name: "", pwd: "" }
-    user.id = (get_last_id() + 1) + '';
+    user.id = (get_last_id() + 1);
     user.name = get_rand_name("cn");
     user.pwd = get_rand_pwd("simple");
     return new UserClass(user)
