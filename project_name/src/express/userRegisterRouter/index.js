@@ -61,6 +61,13 @@ userRegisterRouter.get("/to_register/:name/:pwd", (req, res) => {
     })
     return;
 })
+userRegisterRouter.get("/sellect", (req, res) => {
+    let where = JSON.parse(req.query.where)
+    sellect_all(collectionName, where, (docs) => {
+        res.json(docs)
+    })
+    return;
+})
 userRegisterRouter.get("/sellect_last", (req, res) => {
     sellect_last(collectionName, {}, (doc) => {
         res.json(doc)
